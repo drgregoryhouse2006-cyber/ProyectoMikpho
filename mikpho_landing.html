@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --navy:#0a0f1e;--navy2:#0e1529;--navy3:#111827;
+    --teal:#00f2fe;--teal2:#06b6d4;--gold:#f59e0b;--gold2:#fbbf24;
+    --coral:#ff6b6b;--green:#10b981;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2d45
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:'Rajdhani',sans-serif;letter-spacing:.5px}
+
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(10,15,30,.97);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px
+  }
+  .nav-logo{display:flex;align-items:center;gap:10px}
+  .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--teal),var(--teal2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;color:#0a0f1e}
+  .nav-brand{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:#fff}
+  .nav-brand span{color:var(--teal)}
+  .nav-items{display:flex;gap:4px}
+  .nav-btn{background:none;border:none;color:var(--muted);font-size:13px;font-family:'DM Sans',sans-serif;padding:6px 14px;border-radius:6px;cursor:pointer;transition:.2s}
+  .nav-btn:hover,.nav-btn.active{background:rgba(0,242,254,.08);color:var(--teal)}
+  .nav-cta{background:var(--teal);color:#0a0f1e;font-weight:600;font-size:13px;padding:7px 18px;border-radius:8px;border:none;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;transition:.2s}
+  .nav-cta:hover{background:var(--gold);transform:translateY(-1px)}
+
+  section{padding:60px 2rem}
+  .container{max-width:960px;margin:0 auto}
+  .section-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal);font-weight:600;margin-bottom:10px}
+  .section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#fff;margin-bottom:10px}
+  .section-sub{font-size:.95rem;color:var(--muted);max-width:540px;margin-bottom:40px;line-height:1.6}
+  .divider{border:none;border-top:1px solid var(--border);margin:0}
+
+  .hero{padding:60px 2rem 50px;position:relative;overflow:hidden}
+  .hero-grid-bg{
+    position:absolute;inset:0;
+    background-image:linear-gradient(rgba(0,242,254,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,254,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+    mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%)
+  }
+  .hero-glow{position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,242,254,.08) 0%,transparent 65%);pointer-events:none}
+  .hero-content{position:relative;z-index:2;max-width:960px;margin:0 auto}
+
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,242,254,.08);border:1px solid rgba(0,242,254,.2);border-radius:100px;padding:5px 14px;font-size:12px;color:var(--teal);margin-bottom:24px;letter-spacing:.8px;text-transform:uppercase;font-weight:500}
+  .badge-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+
+  .hero h1{font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:700;line-height:1.05;color:#fff;margin-bottom:12px}
+  .hero h1 .accent{color:var(--teal)}
+  .hero h1 .accent2{color:var(--gold)}
+  .hero-sub{font-size:1.05rem;color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:32px;font-weight:300}
+
+  .hero-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  @media(max-width:700px){.hero-layout{grid-template-columns:1fr}}
+
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+  .btn-primary{background:var(--teal);color:#0a0f1e;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:.8px;padding:12px 28px;border-radius:10px;border:none;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+  .btn-primary:hover{background:var(--gold);transform:translateY(-2px)}
+  .btn-outline{background:transparent;color:var(--teal);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:15px;letter-spacing:.5px;padding:12px 24px;border-radius:10px;border:1px solid rgba(0,242,254,.3);cursor:pointer;transition:.2s}
+  .btn-outline:hover{border-color:var(--teal);background:rgba(0,242,254,.06)}
+
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .hero-stat{background:rgba(14,21,41,.9);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .hero-stat-val{font-family:'Rajdhani',sans-serif;font-size:1.7rem;font-weight:700;color:var(--teal)}
+  .hero-stat-lbl{font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.6px}
+
+  .how-section{background:var(--navy2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:700px){.steps-grid{grid-template-columns:1fr}}
+  .step-card{background:var(--navy3);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;transition:.25s}
+  .step-card:hover{border-color:rgba(0,242,254,.2);transform:translateY(-3px)}
+  .step-num{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;color:rgba(0,242,254,.12);position:absolute;top:12px;right:16px;line-height:1}
+  .step-icon{font-size:24px;margin-bottom:12px}
+  .step-title{font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:6px}
+  .step-desc{font-size:13px;color:var(--muted);line-height:1.6}
+  .step-tag{display:inline-block;background:rgba(0,242,254,.1);color:var(--teal);font-size:11px;padding:3px 10px;border-radius:100px;margin-top:10px;font-weight:500}
+
+  .preview-section{background:var(--navy)}
+  .preview-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto}
+  .preview-tab{background:none;border:none;padding:10px 18px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap;display:flex;align-items:center;gap:7px}
+  .preview-tab.active{color:var(--teal);border-bottom-color:var(--teal);background:rgba(0,242,254,.04)}
+  .preview-tab:hover{color:var(--text)}
+
+  .preview-screen{background:var(--navy3);border:1px solid var(--border);border-radius:14px;padding:24px;animation:fadeSlide .3s ease}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .screen-title{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+
+  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+  .metric-card{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+  .metric-val{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;color:var(--teal)}
+  .metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+  .bar-chart{display:flex;flex-direction:column;gap:9px}
+  .bar-row{display:flex;align-items:center;gap:10px}
+  .bar-label{font-size:12px;color:var(--muted);width:180px;text-align:right;flex-shrink:0}
+  .bar-track{flex:1;height:13px;background:rgba(255,255,255,.05);border-radius:7px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:7px}
+  .bar-pct{font-size:11px;color:var(--muted);width:36px;text-align:right;flex-shrink:0}
+
+  .gantt-view{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+  .gantt-row{display:flex;align-items:center;gap:12px}
+  .gantt-label{font-size:12px;color:var(--muted);width:160px;text-align:right;flex-shrink:0}
+  .gantt-track{flex:1;height:20px;background:rgba(255,255,255,.04);border-radius:4px;position:relative;overflow:hidden}
+  .gantt-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:500}
+
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+  .compare-card{background:var(--navy2);border-radius:10px;padding:14px;border:1px solid var(--border)}
+  .compare-card.active{border-color:rgba(0,242,254,.4)}
+  .compare-tag{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+  .diff-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+  .diff-neg{color:#ef4444}.diff-pos{color:#10b981}
+
+  .avance-block{margin-bottom:14px}
+  .progress-bar-outer{background:rgba(255,255,255,.05);border-radius:10px;height:16px;overflow:hidden;margin-top:5px}
+  .progress-bar-inner{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--teal),var(--green))}
+  .alert-block{border-left:4px solid var(--gold);background:rgba(245,158,11,.07);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--text);margin-top:10px}
+
+  .curva-chart{background:rgba(0,0,0,.2);border-radius:10px;padding:14px;position:relative;height:190px}
+  .curva-svg{width:100%;height:100%}
+
+  .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:700px){.features-grid{grid-template-columns:1fr}}
+  .feature-card{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:22px;transition:.25s}
+  .feature-card:hover{border-color:rgba(0,242,254,.2);transform:translateY(-3px)}
+  .feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:17px}
+  .feature-icon.teal{background:rgba(0,242,254,.1)}
+  .feature-icon.gold{background:rgba(245,158,11,.1)}
+  .feature-icon.green{background:rgba(16,185,129,.1)}
+  .feature-icon.coral{background:rgba(255,107,107,.1)}
+  .feature-icon.blue{background:rgba(59,130,246,.1)}
+  .feature-icon.purple{background:rgba(139,92,246,.1)}
+  .feature-title{font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:6px}
+  .feature-desc{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+  .cta-section{text-align:center;background:var(--navy2);border-top:1px solid var(--border)}
+  .cta-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#fff;margin-bottom:10px}
+  .cta-sub{color:var(--muted);font-size:.95rem;margin-bottom:28px;max-width:460px;margin-left:auto;margin-right:auto}
+  .cta-badges{display:flex;justify-content:center;gap:10px;margin-top:24px;flex-wrap:wrap}
+  .cta-badge{background:rgba(14,21,41,.8);border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:11.5px;color:var(--muted)}
+  .cta-badge span{color:var(--teal)}
+
+  footer{text-align:center;padding:20px 2rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+  footer strong{color:var(--teal)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     FUNCIÓN DE NAVEGACIÓN — definida primero para que todos
+     los botones la encuentren disponible inmediatamente.
+     
+     USA window.top.location.href  (no postMessage).
+     Esto navega el documento PADRE del iframe de Streamlit,
+     forzando una recarga con ?open_app=1 que app.py detecta.
+════════════════════════════════════════════════════════════ -->
+<script>
+function abrirSistema() {
+    try {
+        // Navega el documento raíz (fuera del iframe de Streamlit)
+        var base = window.top.location.pathname;
+        window.top.location.href = base + '?open_app=1';
+    } catch(e) {
+        // Fallback si el sandbox bloquea window.top
+        window.location.href = window.location.href.split('?')[0] + '?open_app=1';
+    }
+}
+</script>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">M</div>
+    <span class="nav-brand">MIKPHO <span>BI</span></span>
+  </div>
+  <div class="nav-items">
+    <button class="nav-btn active" onclick="document.getElementById('hero').scrollIntoView({behavior:'smooth'})">Inicio</button>
+    <button class="nav-btn" onclick="document.getElementById('modulos').scrollIntoView({behavior:'smooth'})">Módulos</button>
+    <button class="nav-btn" onclick="document.getElementById('flujo').scrollIntoView({behavior:'smooth'})">Flujo</button>
+    <button class="nav-btn" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Demo</button>
+  </div>
+  <button class="nav-cta" onclick="abrirSistema()">&#9654; ABRIR SISTEMA</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-layout">
+      <div>
+        <div class="hero-badge"><span class="badge-dot"></span>Sistema activo — Santa Marta, Colombia</div>
+        <h1>MIKPHO <span class="accent">INTELLIGENCE</span><br>SYSTEM <span class="accent2">v2.0</span></h1>
+        <p class="hero-sub">Control y Business Intelligence para proyectos de construcción. Presupuesto, cronograma, ejecución y proyección en un solo lugar.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="abrirSistema()">&#9654; INICIAR SISTEMA</button>
+          <button class="btn-outline" onclick="document.getElementById('flujo').scrollIntoView({behavior:'smooth'})">&#8595; ¿Cómo funciona?</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-val">5</div><div class="hero-stat-lbl">Módulos BI</div></div>
+        <div class="hero-stat"><div class="hero-stat-val" style="color:var(--gold)">PDF</div><div class="hero-stat-lbl">Reportes Auto</div></div>
+        <div class="hero-stat"><div class="hero-stat-val" style="color:var(--green)">360°</div><div class="hero-stat-lbl">Control Obra</div></div>
+        <div class="hero-stat" style="grid-column:span 3">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">
+            ▶ Haz clic en <strong style="color:var(--teal)">INICIAR SISTEMA</strong> para cargar tu presupuesto Excel
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- CÓMO FUNCIONA -->
+<section class="how-section" id="flujo">
+  <div class="container">
+    <div class="section-label">Flujo de trabajo</div>
+    <h2 class="section-title">¿Cómo usar el sistema?</h2>
+    <p class="section-sub">Tres pasos para tener tu proyecto analizado y listo para reportar a gerencia.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">📂</div>
+        <div class="step-title">Carga tu presupuesto Excel</div>
+        <div class="step-desc">Arrastra 1 o 2 archivos .xlsx. El sistema detecta las hojas automáticamente y mapea las columnas de capítulos y costos.</div>
+        <span class="step-tag">Formato .xlsx</span>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">🗓️</div>
+        <div class="step-title">Configura el cronograma</div>
+        <div class="step-desc">Asigna fechas de inicio y duración a cada capítulo. Registra el % de avance real ejecutado en obra para el control.</div>
+        <span class="step-tag">Gantt interactivo</span>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">📦</div>
+        <div class="step-title">Analiza y exporta</div>
+        <div class="step-desc">Explora todos los módulos BI, identifica riesgos y descarga el paquete completo: PDF gerencial + Excel en un clic.</div>
+        <span class="step-tag">PDF + ZIP</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <button class="btn-primary" onclick="abrirSistema()">&#9654; ABRIR SISTEMA Y CARGAR ARCHIVO</button>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- DEMO PREVIEW -->
+<section class="preview-section" id="demo">
+  <div class="container">
+    <div class="section-label">Vista previa interactiva</div>
+    <h2 class="section-title">Explora los módulos</h2>
+    <div class="preview-tabs" id="tabBar">
+      <button class="preview-tab active" data-tab="analisis">📊 Análisis</button>
+      <button class="preview-tab" data-tab="comparacion">⚖️ Comparación</button>
+      <button class="preview-tab" data-tab="gantt">🗓️ Gantt</button>
+      <button class="preview-tab" data-tab="avance">📈 Control Avance</button>
+      <button class="preview-tab" data-tab="curvaS">📉 Curva S</button>
+    </div>
+
+    <!-- TAB: Análisis -->
+    <div class="preview-screen" id="tab-analisis">
+      <div class="screen-title"><span>📊</span> Análisis Individual — Mikpho Tower</div>
+      <div class="metric-grid">
+        <div class="metric-card"><div class="metric-val">$1.085M</div><div class="metric-lbl">Costo Total</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--gold)">$868K/m²</div><div class="metric-lbl">Valor por m²</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--green)">1,250 m²</div><div class="metric-lbl">Área</div></div>
+      </div>
+      <div class="bar-chart">
+        <div class="bar-row"><div class="bar-label">Cimentación y Estructura</div><div class="bar-track"><div class="bar-fill" style="width:29.5%;background:linear-gradient(90deg,#00f2fe,#06b6d4)"></div></div><div class="bar-pct">29.5%</div></div>
+        <div class="bar-row"><div class="bar-label">Mampostería y Muros</div><div class="bar-track"><div class="bar-fill" style="width:16.6%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div><div class="bar-pct">16.6%</div></div>
+        <div class="bar-row"><div class="bar-label">Acabados y Pintura</div><div class="bar-track"><div class="bar-fill" style="width:11%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><div class="bar-pct">11.0%</div></div>
+        <div class="bar-row"><div class="bar-label">Cubierta e Impermeab.</div><div class="bar-track"><div class="bar-fill" style="width:8.8%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div></div><div class="bar-pct">8.8%</div></div>
+        <div class="bar-row"><div class="bar-label">Carpintería y Ventanería</div><div class="bar-track"><div class="bar-fill" style="width:7.8%;background:linear-gradient(90deg,#8b5cf6,#a78bfa)"></div></div><div class="bar-pct">7.8%</div></div>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn-primary" style="font-size:13px;padding:9px 20px" onclick="abrirSistema()">&#9654; Cargar mi presupuesto real</button>
+      </div>
+    </div>
+
+    <!-- TAB: Comparación -->
+    <div class="preview-screen" id="tab-comparacion" style="display:none">
+      <div class="screen-title"><span>⚖️</span> Comparativa de Proyectos</div>
+      <div class="compare-grid">
+        <div class="compare-card active">
+          <div class="compare-tag" style="color:var(--teal)">🔵 Proyecto 1</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700">$1.085M</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">1,250 m² · $868K/m²</div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-tag" style="color:#f87171">🔴 Proyecto 2</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700">$1.320M</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">1,500 m² · $880K/m²</div>
+        </div>
+      </div>
+      <div class="diff-row"><span style="color:var(--muted)">Cimentación y Estructura</span><span>$320K → $388K</span><span class="diff-neg">+21.2%</span></div>
+      <div class="diff-row"><span style="color:var(--muted)">Mampostería y Muros</span><span>$180K → $210K</span><span class="diff-neg">+16.6%</span></div>
+      <div class="diff-row"><span style="color:var(--muted)">Instalaciones Eléctricas</span><span>$68K → $62K</span><span class="diff-pos">-8.8%</span></div>
+      <div class="diff-row"><span style="color:var(--muted)">Acabados y Pintura</span><span>$120K → $115K</span><span class="diff-pos">-4.2%</span></div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn-primary" style="font-size:13px;padding:9px 20px" onclick="abrirSistema()">&#9654; Comparar mis proyectos reales</button>
+      </div>
+    </div>
+
+    <!-- TAB: Gantt -->
+    <div class="preview-screen" id="tab-gantt" style="display:none">
+      <div class="screen-title"><span>🗓️</span> Cronograma — Diagrama Gantt</div>
+      <div class="gantt-view">
+        <div class="gantt-row"><div class="gantt-label">Preliminares</div><div class="gantt-track"><div class="gantt-bar" style="width:12%;background:rgba(0,242,254,.25);color:var(--teal)">2 sem</div></div></div>
+        <div class="gantt-row"><div class="gantt-label">Cimentación</div><div class="gantt-track"><div class="gantt-bar" style="width:55%;margin-left:12%;background:rgba(0,242,254,.35);color:var(--teal)">13 sem</div></div></div>
+        <div class="gantt-row"><div class="gantt-label">Mampostería</div><div class="gantt-track"><div class="gantt-bar" style="width:40%;margin-left:30%;background:rgba(245,158,11,.3);color:var(--gold)">9 sem</div></div></div>
+        <div class="gantt-row"><div class="gantt-label">Instalaciones</div><div class="gantt-track"><div class="gantt-bar" style="width:30%;margin-left:45%;background:rgba(16,185,129,.3);color:var(--green)">7 sem</div></div></div>
+        <div class="gantt-row"><div class="gantt-label">Acabados</div><div class="gantt-track"><div class="gantt-bar" style="width:35%;margin-left:60%;background:rgba(139,92,246,.3);color:#a78bfa">8 sem</div></div></div>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn-primary" style="font-size:13px;padding:9px 20px" onclick="abrirSistema()">&#9654; Planificar mi obra</button>
+      </div>
+    </div>
+
+    <!-- TAB: Control Avance -->
+    <div class="preview-screen" id="tab-avance" style="display:none">
+      <div class="screen-title"><span>📈</span> Control de Ejecución</div>
+      <div style="background:rgba(59,130,246,.06);border-left:5px solid #3b82f6;border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:16px;font-size:13px">
+        <strong style="color:#60a5fa">🔵 En Ejecución</strong> — El proyecto avanza. Verifica que el ritmo corresponda al cronograma.
+      </div>
+      <div class="metric-grid" style="margin-bottom:16px">
+        <div class="metric-card"><div class="metric-val">$1.085M</div><div class="metric-lbl">Presupuesto</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--green)">$621K</div><div class="metric-lbl">Ejecutado</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--gold)">57.3%</div><div class="metric-lbl">Avance Físico</div></div>
+      </div>
+      <div class="avance-block">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Avance Global</span><span style="color:var(--teal);font-weight:600">57.3%</span></div>
+        <div class="progress-bar-outer"><div class="progress-bar-inner" style="width:57.3%"></div></div>
+      </div>
+      <div class="alert-block">⚠️ <strong style="color:var(--gold)">3 capítulos</strong> con menos del 30% de ejecución</div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn-primary" style="font-size:13px;padding:9px 20px" onclick="abrirSistema()">&#9654; Controlar mi obra</button>
+      </div>
+    </div>
+
+    <!-- TAB: Curva S -->
+    <div class="preview-screen" id="tab-curvaS" style="display:none">
+      <div class="screen-title"><span>📉</span> Curva S — Planeado vs Real</div>
+      <div class="curva-chart">
+        <svg class="curva-svg" viewBox="0 0 600 170" xmlns="http://www.w3.org/2000/svg">
+          <line x1="40" y1="10" x2="40" y2="145" stroke="#1e2d45" stroke-width="1"/>
+          <line x1="40" y1="145" x2="580" y2="145" stroke="#1e2d45" stroke-width="1"/>
+          <text x="28" y="148" font-size="9" fill="#64748b" text-anchor="middle">0%</text>
+          <text x="28" y="100" font-size="9" fill="#64748b" text-anchor="middle">30%</text>
+          <text x="28" y="55" font-size="9" fill="#64748b" text-anchor="middle">70%</text>
+          <text x="28" y="16" font-size="9" fill="#64748b" text-anchor="middle">100%</text>
+          <polyline points="40,145 100,138 160,125 220,102 280,75 340,50 400,30 460,18 520,12 580,10" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+          <polyline points="40,145 100,140 160,132 220,115 280,95 340,78" fill="none" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="340" y1="10" x2="340" y2="145" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="344" y="22" font-size="9" fill="#f59e0b">Hoy</text>
+          <circle cx="340" cy="78" r="4" fill="#00f2fe"/>
+          <circle cx="340" cy="50" r="4" fill="#3b82f6"/>
+          <text x="350" y="82" font-size="9" fill="#00f2fe">Real 47%</text>
+          <text x="350" y="46" font-size="9" fill="#3b82f6">Plan 63%</text>
+        </svg>
+      </div>
+      <div class="metric-grid" style="margin-top:14px">
+        <div class="metric-card"><div class="metric-val">63.0%</div><div class="metric-lbl">Planeado Hoy</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--teal)">47.0%</div><div class="metric-lbl">Real Hoy</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:#ef4444">-16.0%</div><div class="metric-lbl">Desviación</div></div>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn-primary" style="font-size:13px;padding:9px 20px" onclick="abrirSistema()">&#9654; Ver mi Curva S real</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- MÓDULOS -->
+<section id="modulos">
+  <div class="container">
+    <div class="section-label">Módulos del sistema</div>
+    <h2 class="section-title">Todo lo que necesitas para controlar tu obra</h2>
+    <p class="section-sub">Cinco módulos integrados que cubren el ciclo completo de un proyecto de construcción.</p>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon teal">📊</div><div class="feature-title">Análisis Individual</div><div class="feature-desc">Treemaps, costo por m², resumen ejecutivo y reporte PDF gerencial automático.</div></div>
+      <div class="feature-card"><div class="feature-icon gold">⚖️</div><div class="feature-title">Comparación de Proyectos</div><div class="feature-desc">Compara dos presupuestos con barras, tortas y tabla diferencial por capítulo.</div></div>
+      <div class="feature-card"><div class="feature-icon green">🗓️</div><div class="feature-title">Cronograma Gantt</div><div class="feature-desc">Planifica tiempos, visualiza el Gantt interactivo y exporta en Excel.</div></div>
+      <div class="feature-card"><div class="feature-icon coral">📈</div><div class="feature-title">Control de Avance</div><div class="feature-desc">Semáforo de salud, métricas CPI, proyección de costo final y alertas de riesgo.</div></div>
+      <div class="feature-card"><div class="feature-icon blue">📉</div><div class="feature-title">Curva S</div><div class="feature-desc">Seguimiento acumulado planeado vs real con KPIs de desviación.</div></div>
+      <div class="feature-card"><div class="feature-icon purple">📦</div><div class="feature-title">Exportación Completa</div><div class="feature-desc">Paquete ZIP con PDF gerencial + cronograma Excel en un solo clic.</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="container">
+    <div class="section-label">Mikpho Construcciones · Santa Marta</div>
+    <h2 class="cta-title">Control total de tu obra,<br>en una sola plataforma</h2>
+    <p class="cta-sub">Diseñado para el ritmo de construcción del Caribe colombiano.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <button class="btn-primary" onclick="abrirSistema()">&#9654; ABRIR SISTEMA</button>
+      <button class="btn-outline" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">&#8595; Ver Demo</button>
+    </div>
+    <div class="cta-badges">
+      <div class="cta-badge"><span>✓</span> Reporte PDF Automático</div>
+      <div class="cta-badge"><span>✓</span> Exportación ZIP</div>
+      <div class="cta-badge"><span>✓</span> Sin límite de proyectos</div>
+      <div class="cta-badge"><span>✓</span> Modo Demo incluido</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>MIKPHO CONSTRUCCIONES</strong> &nbsp;·&nbsp; Sistema de Control y Business Intelligence &nbsp;·&nbsp; Santa Marta, Colombia
+</footer>
+
+<script>
+  // ── Tabs de la demo preview ──────────────────────────────────────────
+  const tabBar = document.getElementById('tabBar');
+  const tabs = tabBar.querySelectorAll('.preview-tab');
+  tabs.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.preview-screen').forEach(function(s) { s.style.display = 'none'; });
+      document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+    });
+  });
+
+  // ── Resaltar ítem del nav según scroll ───────────────────────────────
+  const secciones = ['hero', 'demo', 'modulos', 'flujo'];
+  const navBtns = document.querySelectorAll('.nav-btn');
+  window.addEventListener('scroll', function() {
+    var current = '';
+    secciones.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 80) current = id;
+    });
+    navBtns.forEach(function(btn, i) {
+      btn.classList.toggle('active', secciones[i] === current || (current === '' && i === 0));
+    });
+  });
+</script>
+</body>
+</html>
