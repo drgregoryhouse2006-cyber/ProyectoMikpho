@@ -2,5 +2,6 @@
   "venvPath": ".",
   "venv": "venv",
   "reportMissingModuleSource": "none",
-  "reportMissingTypeStubs": "none"
+  "reportMissingTypeStubs": "none",
+  "extraPaths": ["."]
 }

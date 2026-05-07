@@ -148,6 +148,10 @@
 
   footer{text-align:center;padding:20px 2rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
   footer strong{color:var(--teal)}
+  @keyframes parpadeo {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.2; }
+  }
 </style>
 </head>
 <body>
@@ -162,14 +166,21 @@
 ════════════════════════════════════════════════════════════ -->
 <script>
 function abrirSistema() {
-    try {
-        // Navega el documento raíz (fuera del iframe de Streamlit)
-        var base = window.top.location.pathname;
-        window.top.location.href = base + '?open_app=1';
-    } catch(e) {
-        // Fallback si el sandbox bloquea window.top
-        window.location.href = window.location.href.split('?')[0] + '?open_app=1';
+    // El botón nativo de Streamlit (arriba a la derecha) es el que
+    // realmente abre el sistema. Esta función solo guía al usuario
+    // hacia él con un scroll suave al inicio de la página.
+    var hero = document.getElementById('hero');
+    if (hero) {
+        hero.scrollIntoView({ behavior: 'smooth' });
     }
+    // Parpadeo visual para llamar la atención al botón de Streamlit
+    var hints = document.querySelectorAll('.hint-streamlit');
+    hints.forEach(function(el) {
+        el.style.animation = 'none';
+        setTimeout(function() {
+            el.style.animation = 'parpadeo 1s ease 3';
+        }, 10);
+    });
 }
 </script>
 
@@ -207,11 +218,15 @@ function abrirSistema() {
         <div class="hero-stat"><div class="hero-stat-val">5</div><div class="hero-stat-lbl">Módulos BI</div></div>
         <div class="hero-stat"><div class="hero-stat-val" style="color:var(--gold)">PDF</div><div class="hero-stat-lbl">Reportes Auto</div></div>
         <div class="hero-stat"><div class="hero-stat-val" style="color:var(--green)">360°</div><div class="hero-stat-lbl">Control Obra</div></div>
-        <div class="hero-stat" style="grid-column:span 3">
-          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">
-            ▶ Haz clic en <strong style="color:var(--teal)">INICIAR SISTEMA</strong> para cargar tu presupuesto Excel
-          </div>
-        </div>
+        <div class="hero-stat hint-streamlit" style="grid-column:span 3;
+     border:1px solid rgba(0,242,254,0.2);
+     background:rgba(0,242,254,0.05)">
+  <div style="font-size:12px;color:var(--muted);margin-bottom:4px">
+    ▶ Usa el botón <strong style="color:var(--teal)">▶ ABRIR SISTEMA</strong>
+    en la <strong style="color:var(--teal)">esquina superior derecha</strong>
+    para cargar tu presupuesto
+  </div>
+</div>
       </div>
     </div>
   </div>
